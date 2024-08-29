@@ -1,0 +1,67 @@
+{
+  "name": "mestrado-paa",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --fix",
+    "preview": "vite preview",
+    "analyze-bar": "vite-bundle-visualizer",
+    "analyze-sun": "vite-bundle-visualizer --template sunburst",
+    "analyze-net": "vite-bundle-visualizer --template network"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "3.9.0",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "14.2.3",
+    "react-hook-form": "7.53.0",
+    "uuid": "^10.0.0",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@stylistic/eslint-plugin": "2.7.1",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "6.9.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react": "7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.41",
+    "prettier": "3.3.3",
+    "prettier-plugin-tailwindcss": "0.6.6",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "tailwind-merge": "2.5.2",
+    "tailwind-variants": "0.2.1",
+    "tailwindcss": "^3.4.10",
+    "tailwindcss-animation-delay": "2.0.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "8.3.0",
+    "vite": "^5.4.1",
+    "vite-bundle-visualizer": "^1.2.1",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^5.0.1"
+  },
+  "resolutions": {
+    "strip-ansi": "^7.0.1"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  }
+}
