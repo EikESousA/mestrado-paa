@@ -1,3 +1,3 @@
-import BookProvider from "./BookProvider";
+import AppProvider from "./AppProvider";
 
-export { BookProvider };
+export { AppProvider };

@@ -4,12 +4,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { App } from "./app";
-import { BookProvider } from "./providers";
+import { AppProvider } from "./providers";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BookProvider>
+    <AppProvider>
       <App />
-    </BookProvider>
+    </AppProvider>
   </StrictMode>,
 );

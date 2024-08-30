@@ -1,4 +1,11 @@
-import { ComponentProps, useCallback, useState } from "react";
+import {
+  ComponentProps,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 import { useDropzone } from "react-dropzone";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -34,7 +41,7 @@ const dragVariant = tv({
   },
 });
 
-interface IUploadProps extends ComponentProps<"input"> {
+export interface IUploadProps extends ComponentProps<"input"> {
   files?: IFileDTO[];
   onChangeFiles?: (value: IFileDTO[]) => void;
   name: string;
@@ -43,85 +50,114 @@ interface IUploadProps extends ComponentProps<"input"> {
   full?: boolean;
 }
 
-export default function Upload({
-  ref,
-  name,
-  files = [],
-  onChangeFiles = () => {},
-  multi = false,
-  extension = "pdf",
-  full = false,
-  ...rest
-}: IUploadProps) {
-  const [filesTmp, setFilesTmp] = useState<IFileDTO[]>(files);
+type Ref = HTMLInputElement;
 
-  const onDrop = useCallback((acceptedFiles: (File | undefined)[]) => {
-    if (acceptedFiles.length > 0) {
-      const updatedFiles: IFileDTO[] = [];
+const Upload = forwardRef<Ref, IUploadProps>(
+  (
+    {
+      name,
+      files = [],
+      onChangeFiles = () => {},
+      multi = false,
+      extension = "pdf",
+      full = false,
+      ...rest
+    },
+    ref,
+  ) => {
+    const id = useId();
 
-      acceptedFiles.forEach((file) => {
-        if (file) {
-          const extensionFile = file.name.split(".").pop()?.toLowerCase();
+    const [filesTmp, setFilesTmp] = useState<IFileDTO[]>(files);
 
-          if (
-            extensionFile &&
-            extensionFile.toLowerCase() === extension.toLowerCase()
-          ) {
-            updatedFiles.push({
-              id: uuidv4(),
-              url: URL.createObjectURL(file),
-              name: file.name,
-              file,
-            });
-          }
+    const onDrop = useCallback(
+      (acceptedFiles: (File | undefined)[]) => {
+        if (acceptedFiles.length > 0) {
+          const updatedFiles: IFileDTO[] = [];
+
+          acceptedFiles.forEach((file) => {
+            if (file) {
+              const extensionFile = file.name.split(".").pop()?.toLowerCase();
+
+              if (
+                extensionFile &&
+                extensionFile.toLowerCase() === extension.toLowerCase()
+              ) {
+                updatedFiles.push({
+                  id: uuidv4(),
+                  url: URL.createObjectURL(file),
+                  name: file.name,
+                  file,
+                });
+              }
+            }
+          });
+
+          setFilesTmp((prev) =>
+            multi ? [...prev, ...updatedFiles] : [...updatedFiles],
+          );
         }
-      });
+      },
+      [extension, multi],
+    );
 
-      setFilesTmp(() => [...updatedFiles]);
+    function handleDelete() {
+      setFilesTmp([]);
     }
-  }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: { "application/pdf": [".pdf"] },
-  });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+      accept: { "application/pdf": [".pdf"] },
+    });
 
-  return (
-    <div className={twMerge("w-full max-w-xl", fullVariant({ full }))}>
-      <div
-        {...getRootProps()}
-        className="flex w-full cursor-pointer flex-col items-start justify-start gap-1"
-      >
-        <input
-          {...rest}
-          {...getInputProps()}
-          ref={ref}
-          id={uuidv4()}
-          accept={`.${extension}`}
-        />
+    useEffect(() => {
+      if (onChangeFiles) {
+        onChangeFiles(filesTmp);
+      }
+    }, [filesTmp, onChangeFiles]);
 
+    return (
+      <div className={twMerge("w-full max-w-xl", fullVariant({ full }))}>
         {filesTmp.length === 0 ? (
           <div
-            className={twMerge(
-              dragVariant({ drag: isDragActive }),
-              "flex w-full items-center justify-start gap-4 rounded-sm border-1 border-dashed border-gray-1/60 px-3 py-2",
-            )}
+            {...getRootProps()}
+            className="flex w-full cursor-pointer flex-col items-start justify-start gap-1"
           >
-            <Icon icon="upload" className="size-5 fill-white" />
-            <p className="italic text-gray-1">Selecione o arquivo</p>
+            <input
+              {...rest}
+              {...getInputProps()}
+              ref={ref}
+              id={id}
+              accept={`.${extension}`}
+            />
+
+            <div
+              className={twMerge(
+                dragVariant({ drag: isDragActive }),
+                "flex w-full items-center justify-start gap-4 rounded-sm border-1 border-dashed border-gray-1/60 px-3 py-2",
+              )}
+            >
+              <Icon icon="upload" className="size-5 fill-white" />
+              <p className="italic text-gray-1">Selecione o arquivo</p>
+            </div>
           </div>
         ) : (
-          <div
+          <button
+            type="button"
+            onClick={() => handleDelete()}
             className={twMerge(
               dragVariant({ drag: isDragActive }),
               "flex w-full items-center justify-start gap-4 rounded-sm border-1 border-dashed border-gray-1/60 px-3 py-2",
             )}
           >
-            <p className="italic text-gray-1">{filesTmp[0].name}</p>
+            <p className="italic text-gray-1">{filesTmp.length} arquivo(s)</p>
             <Icon icon="trash" className="size-5 fill-gray-1" />
-          </div>
+          </button>
         )}
       </div>
-    </div>
-  );
-}
+    );
+  },
+);
+
+Upload.displayName = "Upload";
+
+export default Upload;

@@ -15,9 +15,9 @@ export default function PDF() {
     setText(textPdf);
   }
 
-  useEffect(() => {
-    getText();
-  }, []);
+  // useEffect(() => {
+  //   getText();
+  // }, []);
 
   return <div className="h-128 w-full overflow-y-auto text-white">{text}</div>;
 }

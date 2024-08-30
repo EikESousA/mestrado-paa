@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import { ComponentProps, forwardRef, useId } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
@@ -6,7 +6,7 @@ import { IIconDTO, IOnChangeDTO } from "@/dtos";
 
 import Icon from "./Icon";
 
-export interface IInputPros extends ComponentProps<"input"> {
+export interface IInputProps extends ComponentProps<"input"> {
   name: string;
   defaultValue?: string;
   onChange?: IOnChangeDTO;
@@ -45,42 +45,59 @@ const errorVariant = tv({
   },
 });
 
-export default function Input({
-  name,
-  defaultValue,
-  value,
-  placeholder,
-  iconLeft,
-  iconRight,
-  onChange = () => {},
-  full = false,
-  disabled = false,
-  error = false,
-}: IInputPros) {
-  return (
-    <div className="flex items-center justify-center gap-4 rounded-md border-1 border-gray-4/20 bg-dark-2 p-2">
-      {iconLeft ? (
-        <Icon icon={iconLeft} className="size-6 fill-primary-4" />
-      ) : null}
+type Ref = HTMLInputElement;
 
-      <input
-        name={name}
-        defaultValue={defaultValue}
-        onChange={(value) => onChange(value)}
-        value={value}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={twMerge(
-          "bg-transparent text-gray-4",
-          fullVariant({ full }),
-          errorVariant({ error }),
-        )}
-        type="text"
-      />
+const Input = forwardRef<Ref, IInputProps>(
+  (
+    {
+      name,
+      defaultValue,
+      value,
+      placeholder,
+      iconLeft,
+      iconRight,
+      onChange = () => {},
+      full = false,
+      disabled = false,
+      error = false,
+      ...rest
+    },
+    ref,
+  ) => {
+    const id = useId();
 
-      {iconRight ? (
-        <Icon icon={iconRight} className="size-5 fill-gray-4" />
-      ) : null}
-    </div>
-  );
-}
+    return (
+      <div className="flex items-center justify-center gap-4 rounded-md border-1 border-gray-4/20 bg-dark-2 p-2">
+        {iconLeft ? (
+          <Icon icon={iconLeft} className="size-6 fill-primary-4" />
+        ) : null}
+
+        <input
+          id={id}
+          ref={ref}
+          name={name}
+          defaultValue={defaultValue}
+          onChange={(value) => onChange(value)}
+          value={value}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={twMerge(
+            "bg-transparent text-gray-4",
+            fullVariant({ full }),
+            errorVariant({ error }),
+          )}
+          type="text"
+          {...rest}
+        />
+
+        {iconRight ? (
+          <Icon icon={iconRight} className="size-5 fill-gray-4" />
+        ) : null}
+      </div>
+    );
+  },
+);
+
+Input.displayName = "Input";
+
+export default Input;
