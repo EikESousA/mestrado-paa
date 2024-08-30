@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { v4 as uuidv4 } from "uuid";
 
-import { IFileDTO } from "@/dtos/IFileDTO";
+import { IFileDTO } from "@/dtos";
 
 import Icon from "./Icon";
 

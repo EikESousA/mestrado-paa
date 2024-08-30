@@ -1,6 +1,6 @@
 import { useController } from "react-hook-form";
 
-import { IControlDTO } from "@/dtos/IControlDTO";
+import { IControlDTO } from "@/dtos";
 
 import Input, { IInputProps } from "./Input";
 

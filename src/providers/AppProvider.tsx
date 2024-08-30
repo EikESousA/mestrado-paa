@@ -10,8 +10,8 @@ import pdfToText from "react-pdftotext";
 import { v4 as uuidv4 } from "uuid";
 
 import { exampleDocument } from "@/assets";
-import { IFileDTO } from "@/dtos/IFileDTO";
-import { bruteForce } from "@/functions";
+import { IAlgortimDTO, IFileDTO } from "@/dtos";
+import { bruteForce, kmp, rabinKarp } from "@/functions";
 import { convertToBlob } from "@/utils";
 
 interface IContext {
@@ -20,8 +20,11 @@ interface IContext {
   textMark: string;
   loadingFile: boolean;
   loadingSearch: boolean;
+  algoritms: IAlgortimDTO[];
+  modal: boolean;
   handleFiles: (file: IFileDTO[]) => void;
   handleMark: (filter: string) => void;
+  toogleModal: () => void;
 }
 
 interface IDatas {
@@ -30,6 +33,8 @@ interface IDatas {
   textMark: string;
   loadingFile: boolean;
   loadingSearch: boolean;
+  algoritms: IAlgortimDTO[];
+  modal: boolean;
 }
 
 interface IProps {
@@ -45,6 +50,8 @@ export default function AppProvider({ children }: IProps) {
     textMark: "",
     loadingFile: false,
     loadingSearch: false,
+    algoritms: [],
+    modal: false,
   });
 
   const handleFiles = useCallback((files: IFileDTO[]) => {
@@ -72,7 +79,11 @@ export default function AppProvider({ children }: IProps) {
   }, [datas.files]);
 
   const cleanMark = useCallback(() => {
-    setDatas((prev) => ({ ...prev, textMark: prev.text }));
+    setDatas((prev) => ({
+      ...prev,
+      textMark: prev.text,
+      algoritms: [],
+    }));
   }, []);
 
   const initExample = useCallback(async () => {
@@ -98,19 +109,48 @@ export default function AppProvider({ children }: IProps) {
         return;
       }
 
-      const index = bruteForce(datas.text, filter);
+      setDatas((prev) => ({ ...prev, loadingSearch: true }));
 
-      if (index >= 0) {
-        const textMark =
-          datas.text.substring(0, index) +
-          `<mark>${filter}</mark>` +
-          datas.text.substring(index + filter.length);
+      let textMark = datas.text;
+      const value = filter.length;
 
-        setDatas((prev) => ({ ...prev, textMark }));
+      const dataBruteForce = bruteForce(textMark, filter);
+
+      const dataKMP = kmp(textMark, filter);
+
+      const dataRabinKarp = rabinKarp(textMark, filter);
+
+      if (dataBruteForce.indexes.length > 0) {
+        let offset = 0;
+
+        dataBruteForce.indexes.forEach((index) => {
+          textMark =
+            textMark.slice(0, index + offset) +
+            "<mark>" +
+            textMark.slice(index + offset);
+          offset += "<mark>".length;
+
+          textMark =
+            textMark.slice(0, index + value + offset) +
+            "</mark>" +
+            textMark.slice(index + value + offset);
+          offset += "</mark>".length;
+        });
       }
+
+      setDatas((prev) => ({
+        ...prev,
+        textMark,
+        loadingSearch: false,
+        algoritms: [dataBruteForce, dataKMP, dataRabinKarp],
+      }));
     },
     [datas.text],
   );
+
+  const toogleModal = useCallback(() => {
+    setDatas((prev) => ({ ...prev, modal: !prev.modal }));
+  }, []);
 
   useEffect(() => {
     handleText();
@@ -127,8 +167,11 @@ export default function AppProvider({ children }: IProps) {
       textMark: datas.textMark,
       loadingFile: datas.loadingFile,
       loadingSearch: datas.loadingSearch,
+      algoritms: datas.algoritms,
+      modal: datas.modal,
       handleFiles,
       handleMark,
+      toogleModal,
     };
   }, [
     datas.files,
@@ -136,8 +179,11 @@ export default function AppProvider({ children }: IProps) {
     datas.textMark,
     datas.loadingFile,
     datas.loadingSearch,
+    datas.algoritms,
+    datas.modal,
     handleFiles,
     handleMark,
+    toogleModal,
   ]);
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

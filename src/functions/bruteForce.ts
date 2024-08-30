@@ -1,29 +1,57 @@
-export default function bruteForce(document: string, search: string): number {
-  let index = -1;
+import { IAlgortimDTO } from "@/dtos";
 
-  let i = 0;
+export default function bruteForce(
+  document: string,
+  search: string,
+): IAlgortimDTO {
+  const startTime = performance.now();
 
+  let count = 0;
+
+  const indexes: number[] = [];
   const documentLength = document.length;
   const searchLength = search.length;
+  count++;
+  count++;
+  count++;
 
-  while (i <= documentLength - searchLength + 1 && index === -1) {
-    let k = i;
-    let j = 1;
+  for (let i = 0; i <= documentLength - searchLength; i++) {
+    let j = 0;
+    let stop = false;
+    count++;
+    count++;
 
-    while (
-      document[k - 1].toLowerCase() === search[j - 1].toLowerCase() &&
-      j <= searchLength
-    ) {
-      k++;
-      j++;
+    while (!stop) {
+      if (
+        j < searchLength &&
+        document[i + j].toLowerCase() === search[j].toLowerCase()
+      ) {
+        j++;
+        count++;
+      } else {
+        stop = true;
+        count++;
+      }
+      count++;
+      count++;
     }
 
-    if (j > searchLength) {
-      index = i;
+    if (j === searchLength) {
+      indexes.push(i);
+      count++;
     }
 
-    i++;
+    count++;
   }
 
-  return index;
+  const endTime = performance.now();
+  const time = endTime - startTime;
+
+  return {
+    name: "Força Bruta",
+    indexes,
+    count,
+    time: Number(time.toFixed(4)),
+    memory: 0,
+  };
 }
