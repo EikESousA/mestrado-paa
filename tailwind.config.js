@@ -392,30 +392,6 @@ export default {
 
     extend: {
       keyframes: {
-        typing: {
-          from: {
-            width: 0,
-          },
-          to: {
-            width: "100%",
-          },
-        },
-        zerotohundred: {
-          from: {
-            width: 0,
-          },
-          to: {
-            width: "100%",
-          },
-        },
-        hundredtozero: {
-          from: {
-            width: "100%",
-          },
-          to: {
-            width: 0,
-          },
-        },
         spin: {
           from: {
             transform: "rotate(0deg)",
@@ -447,9 +423,6 @@ export default {
         "anim-typing": "typing 0.75s steps(40, end)",
         "anim-spin": "spin 0.75s infinite",
         "anim-fade": "fade 0.2s ease-in-out",
-        "anim-toastempty": "zerotohundred 5s ease-in-out",
-        "anim-toastcomplete": "hundredtozero 5s ease-in-out",
-        "anim-toastappear": "fade 0.5s ease-in-out",
       },
     },
   },

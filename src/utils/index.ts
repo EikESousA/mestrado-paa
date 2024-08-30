@@ -1,3 +1,4 @@
 import convertToBlob from "./convertToBlob";
+import numberWithCommas from "./numberWithCommas";
 
-export { convertToBlob };
+export { convertToBlob, numberWithCommas };

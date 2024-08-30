@@ -1,5 +1,4 @@
 import { ComponentProps, FormEvent, FormEventHandler, forwardRef } from "react";
-import { twMerge } from "tailwind-merge";
 
 export type IFormProps = ComponentProps<"form"> & {
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -8,16 +7,13 @@ export type IFormProps = ComponentProps<"form"> & {
 type Ref = HTMLFormElement;
 
 const Form = forwardRef<Ref, IFormProps>(
-  ({ onSubmit, className, children, ...rest }, ref) => {
+  ({ onSubmit, children, ...rest }, ref) => {
     return (
       <form
         {...rest}
         ref={ref}
         onSubmit={(event: FormEvent<HTMLFormElement>) => onSubmit(event)}
-        className={twMerge(
-          "flex w-full flex-row items-center justify-between border-y-1 border-gray-4/20 bg-dark-default px-8 py-4",
-          className,
-        )}
+        className={"flex w-full flex-row items-center justify-between"}
       >
         {children}
       </form>

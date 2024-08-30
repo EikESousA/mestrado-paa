@@ -1,11 +1,4 @@
-import {
-  ComponentProps,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useId,
-  useState,
-} from "react";
+import { ComponentProps, forwardRef, useCallback, useId } from "react";
 import { useDropzone } from "react-dropzone";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
@@ -42,10 +35,9 @@ const dragVariant = tv({
 });
 
 export interface IUploadProps extends ComponentProps<"input"> {
-  files?: IFileDTO[];
-  onChangeFiles?: (value: IFileDTO[]) => void;
+  files: IFileDTO[];
+  onChangeFiles: (value: IFileDTO[]) => void;
   name: string;
-  multi?: boolean;
   extension?: "pdf" | "csv";
   full?: boolean;
 }
@@ -54,20 +46,10 @@ type Ref = HTMLInputElement;
 
 const Upload = forwardRef<Ref, IUploadProps>(
   (
-    {
-      name,
-      files = [],
-      onChangeFiles = () => {},
-      multi = false,
-      extension = "pdf",
-      full = false,
-      ...rest
-    },
+    { name, files, onChangeFiles, extension = "pdf", full = false, ...rest },
     ref,
   ) => {
     const id = useId();
-
-    const [filesTmp, setFilesTmp] = useState<IFileDTO[]>(files);
 
     const onDrop = useCallback(
       (acceptedFiles: (File | undefined)[]) => {
@@ -92,16 +74,14 @@ const Upload = forwardRef<Ref, IUploadProps>(
             }
           });
 
-          setFilesTmp((prev) =>
-            multi ? [...prev, ...updatedFiles] : [...updatedFiles],
-          );
+          onChangeFiles([...updatedFiles]);
         }
       },
-      [extension, multi],
+      [extension],
     );
 
     function handleDelete() {
-      setFilesTmp([]);
+      onChangeFiles([]);
     }
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -109,15 +89,9 @@ const Upload = forwardRef<Ref, IUploadProps>(
       accept: { "application/pdf": [".pdf"] },
     });
 
-    useEffect(() => {
-      if (onChangeFiles) {
-        onChangeFiles(filesTmp);
-      }
-    }, [filesTmp, onChangeFiles]);
-
     return (
       <div className={twMerge("w-full max-w-xl", fullVariant({ full }))}>
-        {filesTmp.length === 0 ? (
+        {files.length === 0 ? (
           <div
             {...getRootProps()}
             className="flex w-full cursor-pointer flex-col items-start justify-start gap-1"
@@ -149,7 +123,7 @@ const Upload = forwardRef<Ref, IUploadProps>(
               "flex w-full items-center justify-start gap-4 rounded-sm border-1 border-dashed border-gray-1/60 px-3 py-2",
             )}
           >
-            <p className="italic text-gray-1">{filesTmp.length} arquivo(s)</p>
+            <p className="italic text-gray-1">{files.length} arquivo(s)</p>
             <Icon icon="trash" className="size-5 fill-gray-1" />
           </button>
         )}

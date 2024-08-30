@@ -58,8 +58,8 @@
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1"
   },
-  "resolutions": {
-    "strip-ansi": "^7.0.1"
+  "overrides": {
+    "strip-ansi": "6.0.0"
   },
   "prettier": {
     "plugins": [

@@ -4,7 +4,7 @@ import Icon from "./Icon";
 
 export default function Header() {
   return (
-    <header className="flex flex-row items-center justify-between px-8 py-4">
+    <header className="flex w-full flex-row items-center justify-between px-8 py-4">
       <img src={logoImage} alt="Logo da UFS" className="h-24" />
 
       <div className="flex h-full flex-col items-center justify-center">

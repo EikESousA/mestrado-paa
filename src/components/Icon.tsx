@@ -3,11 +3,11 @@ import { SVGProps } from "react";
 import { IIconDTO } from "@/dtos";
 import { Clock, Count, Github, Help, Search, Trash, Upload } from "@/svgs";
 
-interface IProps extends SVGProps<SVGSVGElement> {
+interface IIconProps extends SVGProps<SVGSVGElement> {
   icon: IIconDTO;
 }
 
-export default function Icon({ icon, ...rest }: IProps) {
+export default function Icon({ icon, ...rest }: IIconProps) {
   switch (icon) {
     case "clock":
       return <Clock {...rest} />;

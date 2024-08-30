@@ -7,7 +7,7 @@ import { useApp } from "@/hooks";
 import { formSchema, IFormSchema } from "@/validators";
 
 export default function App() {
-  const { files, handleFiles } = useApp();
+  const { files, handleFiles, handleMark } = useApp();
 
   const { control, handleSubmit } = useForm<IFormSchema>({
     resolver: zodResolver(formSchema),
@@ -17,14 +17,14 @@ export default function App() {
   });
 
   function formSubmit(data: IFormSchema) {
-    console.log(data);
+    handleMark(data.filter);
   }
 
   return (
-    <div className="h-screen w-screen bg-dark-default">
+    <div className="flex h-screen w-screen flex-col items-start justify-start bg-dark-default">
       <Header />
 
-      <section>
+      <section className="flex w-full items-center justify-between border-y-1 border-gray-4/20 bg-dark-default px-8 py-4">
         <Form onSubmit={handleSubmit(formSubmit)}>
           <Upload
             name="file"
@@ -36,7 +36,7 @@ export default function App() {
         </Form>
       </section>
 
-      <main>
+      <main className="flex h-[calc(100vh-12.5rem)] w-full flex-row items-center justify-center bg-dark-default p-8">
         <PDF />
         <Search />
       </main>

@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-import pdfToText from "react-pdftotext";
+import { useApp } from "@/hooks";
 
-import { exampleDocument } from "@/assets";
-import { convertToBlob } from "@/utils";
+import Loading from "./Loading";
 
 export default function PDF() {
-  const [text, setText] = useState("");
+  const { textMark, loadingFile } = useApp();
 
-  async function getText() {
-    const blob = await convertToBlob(exampleDocument);
-
-    const textPdf = await pdfToText(blob);
-
-    setText(textPdf);
+  if (loadingFile) {
+    return (
+      <div className="flex size-full items-center justify-center overflow-y-auto overflow-x-hidden rounded-l-md bg-dark-1 px-8 py-4 text-justify text-white">
+        <Loading />
+      </div>
+    );
   }
 
-  // useEffect(() => {
-  //   getText();
-  // }, []);
-
-  return <div className="h-128 w-full overflow-y-auto text-white">{text}</div>;
+  return (
+    <div
+      className="size-full overflow-y-auto overflow-x-hidden rounded-l-md bg-dark-1 px-8 py-4 text-justify text-white"
+      dangerouslySetInnerHTML={{ __html: textMark }}
+    />
+  );
 }
