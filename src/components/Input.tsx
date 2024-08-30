@@ -19,6 +19,19 @@ export interface IInputProps extends ComponentProps<"input"> {
   full?: boolean;
 }
 
+const disabledVariant = tv({
+  base: "",
+  variants: {
+    disabled: {
+      true: "cursor-not-allowed opacity-50",
+      false: "opacity-100",
+    },
+  },
+  defaultVariants: {
+    disabled: false,
+  },
+});
+
 const fullVariant = tv({
   base: "",
   variants: {
@@ -67,7 +80,12 @@ const Input = forwardRef<Ref, IInputProps>(
     const id = useId();
 
     return (
-      <div className="flex items-center justify-center gap-4 rounded-md border-1 border-gray-4/20 bg-dark-2 p-2">
+      <div
+        className={twMerge(
+          "flex items-center justify-center gap-4 rounded-md border-1 border-gray-4/20 bg-dark-2 p-2",
+          disabledVariant({ disabled }),
+        )}
+      >
         {iconLeft ? (
           <Icon icon={iconLeft} className="size-6 fill-primary-4" />
         ) : null}
@@ -82,7 +100,7 @@ const Input = forwardRef<Ref, IInputProps>(
           placeholder={placeholder}
           disabled={disabled}
           className={twMerge(
-            "bg-transparent text-gray-4",
+            "bg-transparent text-gray-4 disabled:cursor-not-allowed",
             fullVariant({ full }),
             errorVariant({ error }),
           )}

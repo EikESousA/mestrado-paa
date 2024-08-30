@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Tooltip } from "react-tooltip";
 
 import { logoImage } from "@/assets";
 import { Form, FormInput, Icon, Loading, Modal, Upload } from "@/components";
@@ -83,6 +84,7 @@ export default function App() {
             iconRight="search"
             control={control}
             autoComplete="off"
+            disabled={text.length === 0}
           />
           <button type="submit" className="hidden" />
         </Form>
@@ -101,7 +103,7 @@ export default function App() {
         )}
 
         {files.length > 0 && text.length > 0 ? (
-          <div className="flex h-full w-[22rem] flex-col items-start justify-start gap-4 rounded-r-md bg-dark-2 p-4 text-4 text-white">
+          <div className="flex h-full w-[22rem] flex-col items-start justify-start gap-4 overflow-y-auto rounded-r-md bg-dark-2 p-4 text-4 text-white">
             <div>
               <p>
                 <strong>Nome do Arquivo:</strong>
@@ -119,7 +121,10 @@ export default function App() {
             {algoritms.length > 0 ? (
               <>
                 {algoritms.map((algoritm) => (
-                  <div className="flex w-full flex-col gap-4 border-t-1 border-gray-1 py-4">
+                  <div
+                    key={algoritm.id}
+                    className="flex w-full flex-col gap-4 border-t-1 border-gray-1 py-4"
+                  >
                     <p className="w-full text-center text-4">
                       <strong>{algoritm.name}</strong>
                     </p>
@@ -129,7 +134,12 @@ export default function App() {
                     ) : (
                       <>
                         <div className="flex w-full items-center justify-between gap-4">
-                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+                          <div
+                            data-tooltip-id="algoritm-mark"
+                            data-tooltip-content="Padrões encontrados!"
+                            data-tooltip-place="left"
+                            className="flex flex-1 flex-row items-center justify-start gap-4"
+                          >
                             <Icon icon="mark" className="size-6 fill-gray-1" />
                             <p>
                               {numberWithCommas(
@@ -137,18 +147,35 @@ export default function App() {
                               )}
                             </p>
                           </div>
-                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+
+                          <div
+                            data-tooltip-id="algoritm-count"
+                            data-tooltip-content="Contagem de operações!"
+                            data-tooltip-place="left"
+                            className="flex flex-1 flex-row items-center justify-start gap-4"
+                          >
                             <Icon icon="count" className="size-6 fill-gray-1" />
                             <p>{numberWithCommas(String(algoritm.count))}</p>
                           </div>
                         </div>
 
                         <div className="flex w-full items-center justify-between gap-4">
-                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+                          <div
+                            data-tooltip-id="algoritm-clock"
+                            data-tooltip-content="Tempo de execução!"
+                            data-tooltip-place="left"
+                            className="flex flex-1 flex-row items-center justify-start gap-4"
+                          >
                             <Icon icon="clock" className="size-6 fill-gray-1" />
                             <p>{algoritm.time}ms</p>
                           </div>
-                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+
+                          <div
+                            data-tooltip-id="algoritm-memory"
+                            data-tooltip-content="Espaço armazenado!"
+                            data-tooltip-place="left"
+                            className="flex flex-1 flex-row items-center justify-start gap-4"
+                          >
                             <Icon
                               icon="memory"
                               className="size-6 fill-gray-1"
@@ -158,6 +185,38 @@ export default function App() {
                         </div>
                       </>
                     )}
+                    <Tooltip
+                      id="algoritm-mark"
+                      opacity={1}
+                      style={{
+                        backgroundColor: "#3A2A58",
+                        color: "#f1f3f5",
+                      }}
+                    />
+                    <Tooltip
+                      id="algoritm-count"
+                      opacity={1}
+                      style={{
+                        backgroundColor: "#3A2A58",
+                        color: "#f1f3f5",
+                      }}
+                    />
+                    <Tooltip
+                      id="algoritm-clock"
+                      opacity={1}
+                      style={{
+                        backgroundColor: "#3A2A58",
+                        color: "#f1f3f5",
+                      }}
+                    />
+                    <Tooltip
+                      id="algoritm-memory"
+                      opacity={1}
+                      style={{
+                        backgroundColor: "#3A2A58",
+                        color: "#f1f3f5",
+                      }}
+                    />
                   </div>
                 ))}
               </>
@@ -171,10 +230,10 @@ export default function App() {
           <p className="text-8 font-bold text-gray-1">Integrantes</p>
         </header>
 
-        <main className="z-modal flex flex-col items-center justify-center gap-4 p-8">
+        <main className="mt-4 flex h-full flex-1 flex-col items-center justify-center gap-4 overflow-y-auto p-8">
           {members.map((member) => (
             <div
-              className="flex w-full gap-8 rounded-md border-1 border-gray-1 p-4 shadow-xl"
+              className="flex w-full items-center justify-center gap-8 rounded-md border-1 border-gray-1 p-4 shadow-xl"
               key={member.id}
             >
               <img
