@@ -6,6 +6,7 @@ export type IIconDTO =
   | "github"
   | "help"
   | "mark"
+  | "memory"
   | "search"
   | "trash"
   | "upload";

@@ -129,7 +129,7 @@ export default function App() {
                     ) : (
                       <>
                         <div className="flex w-full items-center justify-between gap-4">
-                          <div className="flex flex-row items-center justify-start gap-4">
+                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
                             <Icon icon="mark" className="size-6 fill-gray-1" />
                             <p>
                               {numberWithCommas(
@@ -137,15 +137,24 @@ export default function App() {
                               )}
                             </p>
                           </div>
-                          <div className="flex flex-row items-center justify-start gap-4">
+                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
                             <Icon icon="count" className="size-6 fill-gray-1" />
                             <p>{numberWithCommas(String(algoritm.count))}</p>
                           </div>
                         </div>
 
-                        <div className="flex flex-row items-center justify-start gap-4">
-                          <Icon icon="clock" className="size-6 fill-gray-1" />
-                          <p>{algoritm.time}ms</p>
+                        <div className="flex w-full items-center justify-between gap-4">
+                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+                            <Icon icon="clock" className="size-6 fill-gray-1" />
+                            <p>{algoritm.time}ms</p>
+                          </div>
+                          <div className="flex flex-1 flex-row items-center justify-start gap-4">
+                            <Icon
+                              icon="memory"
+                              className="size-6 fill-gray-1"
+                            />
+                            <p>{algoritm.memory}</p>
+                          </div>
                         </div>
                       </>
                     )}

@@ -9,6 +9,7 @@ import {
   Github,
   Help,
   Mark,
+  Memory,
   Search,
   Trash,
   Upload,
@@ -34,6 +35,8 @@ export default function Icon({ icon, ...rest }: IIconProps) {
       return <Help {...rest} />;
     case "mark":
       return <Mark {...rest} />;
+    case "memory":
+      return <Memory {...rest} />;
     case "search":
       return <Search {...rest} />;
     case "trash":

@@ -5,6 +5,7 @@ import Email from "./Email";
 import Github from "./Github";
 import Help from "./Help";
 import Mark from "./Mark";
+import Memory from "./Memory";
 import Search from "./Search";
 import Trash from "./Trash";
 import Upload from "./Upload";
@@ -17,6 +18,7 @@ export {
   Github,
   Help,
   Mark,
+  Memory,
   Search,
   Trash,
   Upload,
