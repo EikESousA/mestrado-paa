@@ -1,50 +1,107 @@
-# React + TypeScript + Vite
+# PAA - Casamento de Cadeias
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![PAA](helpers/icon.png)
 
-Currently, two official plugins are available:
+![Code size](https://img.shields.io/badge/Tamanho-780.59kb-orange)
+![Code language](https://img.shields.io/badge/Linguagem-ViteJS_Typescript-blue)
+![Code version](https://img.shields.io/badge/Versão-1.0.0-yellow)
+![Code test](https://img.shields.io/badge/Testes-Não-red)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O sistema foi criado para a matéria de PAA do Mestrado no periodo 2.2024 realizado na Universidade Federal de Sergipe (UFS).
 
-## Expanding the ESLint configuration
+- O sistema permite enviar um PDF e realizar uma pesquisa em 3 técnicas Força Bruta, KMP e Rabin-Karp, mostrando o tempo de execução, consumo de espaço e ação de operações.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 💻 Pré-requisitos
 
-- Configure the top-level `parserOptions` property like this:
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Você instalou a versão do Node 20.14.0.
+- Você tem uma máquina Windows ou Linux ou Mac.
+- Você leu esse documento por completo.
+
+## 🚀 Instalando
+
+Para instalar o projeto, siga estas etapas:
+
+- Primeiro clone o repositório:
+
+```
+git clone https://github.com/EikESousA/mestrado-paa.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Segundo abre o projeto no VSCode e instale as depedências:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+npm install
+ou
+yarn
+```
+
+## 🖥️ Rodar
+
+### ☕ Local
+
+Para rodar o projeto rode o comando
+
+```
+npm run dev
+ou
+yarn dev
+```
+
+### ☕ Produção
+
+Para rodar o projeto no ambiente de produção rode o comando:
+
+```
+npm run build
+ou
+yarn build
+```
+
+## 📁 Pastas
+
+- app: Inicialização do sistema.
+- assets: Arquivos do sistema.
+- components: Todos os components do sistema.
+- dtos: Todas as tipagens.
+- functions: As ténicas de casamento de padrão.
+- helpers: Dados extras para o sistema.
+- hooks: Todos os hooks do sistema.
+- providers: Todos os contextos do sistema.
+- styles: CSS global do sistema.
+- svgs: Icones utilizados para o sistema.
+- validators: Schemas utilizados no sistema.
+
+## 📖 Dependências
+
+- react-dropzone: Biblioteca para arrastar arquivos para um input.
+- react-hook-form: Biblioteca para validar formularios.
+- react-pdftotext: Biblioteca para transformar PDF em texto.
+- react-tooltip: Biblioteca para renderizar um tooltip.
+- uuid: Biblioteca para criação de uuid.
+- zod: Biblioteca para tratamento de dados.
+
+## 🗎 Variaveis de Ambiente
+
+- Não possui variaveis de ambiente.
+
+## 🚂 Páginas
+
+- **/**: Página principal.
+
+## 🔑 Segurança
+
+- Não foi implementado nenhuma técnica de segurança.
+
+## 🫙 Docker
+
+- Não foi implementado a criação do container docker.
+
+## 🎯 Novas Tarefas
+
+- Para a matéria de PAA não é necessário implementar mais nenhuma tarefa.
+
+## 📝 Licença
+
+Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
