@@ -1,6 +1,7 @@
 # PAA - Casamento de Cadeias
 
-![PAA](helpers/icon.png)
+<img src="helpers/icon.png" width="50"/>
+
 
 ![Code size](https://img.shields.io/badge/Tamanho-780.59kb-orange)
 ![Code language](https://img.shields.io/badge/Linguagem-ViteJS_Typescript-blue)
