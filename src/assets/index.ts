@@ -1,3 +1,4 @@
+import exampleDocument from "./example.pdf";
 import logoImage from "./logo.png";
 
-export { logoImage };
+export { exampleDocument, logoImage };
