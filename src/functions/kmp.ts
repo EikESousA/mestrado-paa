@@ -1,6 +1,6 @@
 import { IAlgortimDTO } from "@/dtos";
 
-export default function kmp(document: string, search: string): IAlgortimDTO {
+export default function kmp(document: string, pattern: string): IAlgortimDTO {
   const startTime = performance.now();
 
   let count = 0;
@@ -8,13 +8,13 @@ export default function kmp(document: string, search: string): IAlgortimDTO {
 
   const indexes: number[] = [];
   const documentLength = document.length;
-  const searchLength = search.length;
+  const patternLength = pattern.length;
   count = count + 3;
   memory = memory + 2;
 
-  const lps = buildLPSArray(search);
-  count = count + 4 + 8 * searchLength;
-  memory = memory + 1 + searchLength;
+  const lps = buildLPSArray(pattern);
+  count = count + 4 + 8 * patternLength;
+  memory = memory + 1 + patternLength;
 
   let i = 0;
   let j = 0;
@@ -22,23 +22,28 @@ export default function kmp(document: string, search: string): IAlgortimDTO {
   memory = memory + 2;
 
   while (i < documentLength) {
-    if (document[i].toLowerCase() === search[j].toLowerCase()) {
+    if (document[i].toLowerCase() === pattern[j].toLowerCase()) {
       i++;
       j++;
       count = count + 2;
+    }
 
-      if (j === searchLength) {
-        indexes.push(i - j);
-        j = lps[j - 1];
-        count = count + 3;
-      }
+    if (j === patternLength) {
+      indexes.push(i - j);
+      j = lps[j - 1];
+      count = count + 3;
     } else {
-      if (j !== 0) {
-        j = lps[j - 1];
-      } else {
-        i++;
+      if (
+        i < documentLength &&
+        pattern[j].toLowerCase() !== document[i].toLowerCase()
+      ) {
+        if (j !== 0) {
+          j = lps[j - 1];
+        } else {
+          i++;
+        }
+        count = count + 2;
       }
-      count = count + 2;
     }
 
     count = count + 2;
@@ -70,11 +75,11 @@ function buildLPSArray(pattern: string): number[] {
       lps[i] = len;
       i++;
     } else {
-      if (len !== 0) {
-        len = lps[len - 1];
-      } else {
+      if (len === 0) {
         lps[i] = 0;
         i++;
+      } else {
+        len = lps[len - 1];
       }
     }
   }
