@@ -32,7 +32,7 @@ export default function Modal({
               aria-label="backdrop"
             />
 
-            <div className="relative z-modal flex h-[90vh] max-h-[46rem] w-[80vw] max-w-[50rem] flex-col items-center justify-start bg-dark-2 px-6 py-4">
+            <div className="relative z-modal flex h-[90vh] max-h-[46rem] w-[80vw] max-w-[50rem] flex-col items-center justify-start bg-dark-2 px-6 py-4 phone:max-h-[90vh]">
               <button
                 type="button"
                 onClick={() => onClose()}

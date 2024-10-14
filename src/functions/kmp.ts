@@ -2,24 +2,17 @@ import { IAlgortimDTO } from "@/dtos";
 
 export default function kmp(document: string, pattern: string): IAlgortimDTO {
   const startTime = performance.now();
-
   let count = 0;
   let memory = 0;
 
   const indexes: number[] = [];
   const documentLength = document.length;
   const patternLength = pattern.length;
-  count = count + 3;
-  memory = memory + 2;
 
   const lps = buildLPSArray(pattern);
-  count = count + 4 + 8 * patternLength;
-  memory = memory + 1 + patternLength;
 
   let i = 0;
   let j = 0;
-  count = count + 2;
-  memory = memory + 2;
 
   while (i < documentLength) {
     if (document[i].toLowerCase() === pattern[j].toLowerCase()) {
@@ -31,7 +24,7 @@ export default function kmp(document: string, pattern: string): IAlgortimDTO {
     if (j === patternLength) {
       indexes.push(i - j);
       j = lps[j - 1];
-      count = count + 3;
+      count = count + 2;
     } else {
       if (
         i < documentLength &&
@@ -42,13 +35,15 @@ export default function kmp(document: string, pattern: string): IAlgortimDTO {
         } else {
           i++;
         }
-        count = count + 2;
+        count = count + 4;
       }
     }
 
     count = count + 2;
   }
 
+  count = count + 9 + 8 * patternLength;
+  memory = memory + 5 + patternLength;
   const endTime = performance.now();
   const time = endTime - startTime;
 

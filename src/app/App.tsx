@@ -233,7 +233,7 @@ export default function App() {
         <main className="mt-4 flex h-full flex-1 flex-col items-center justify-center gap-4 overflow-y-auto p-8">
           {members.map((member) => (
             <div
-              className="flex w-full items-center justify-center gap-8 rounded-md border-1 border-gray-1 p-4 shadow-xl"
+              className="flex w-full items-center justify-start gap-8 rounded-md border-1 border-gray-1 p-4 shadow-xl phone:flex-col"
               key={member.id}
             >
               <img
@@ -241,6 +241,7 @@ export default function App() {
                 alt={`Imagem de ${member.name}`}
                 className="size-32 rounded-circle"
               />
+
               <div className="flex flex-col items-start justify-between gap-2">
                 <p className="p-2 text-5 font-bold text-gray-1">
                   {member.name}
